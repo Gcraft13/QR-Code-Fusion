@@ -1,20 +1,17 @@
-const apiURL = "http(s)://api.qrserver.com/v1/create-qr-code/?size=10x10";
+const apiURL = "http(s)://api.qrserver.com/v1/create-qr-code/?size=10x10&data=";
+const qrImage = document.getElementById("qrImage");
+const imgBox = document.getElementById("imgBox");
+const qrText = document.getElementById("qrText");
 
-const urlText = document.getElementById("URL").value;
+function generateQR() {
+  if (qrText.value.length > 0) {
+    qrImage.src = apiURL + qrText.value;
 
-function makeQR() {
-  fetch(apiURL + "&" + urlText)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json(); // Assuming the response is in JSON format
-    })
-    .then((data) => {
-      // Do something with the data
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error("There was a problem with the fetch operation:", error);
+    qrImage.classList.add("show-img");
+  } else {
+    qrText.classList.add("error");
+    setTimeout(() => {
+      qrText.classList.remove("error");
     });
+  }
 }
